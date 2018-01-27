@@ -7,9 +7,9 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
+  title = 'TDD Captcha';
 
-  public pattern: string = "";
+  public pattern: number;
   public leftOperand: number;
   public operand: number;
   public rightOperand: number;
