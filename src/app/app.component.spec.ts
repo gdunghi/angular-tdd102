@@ -74,6 +74,40 @@ describe('AppComponent', () => {
 
     });
 
+    describe("Number to Operand", () => {
+      it("Should return plus when put 1", () => {
+        const component = TestBed.createComponent(AppComponent);
+        let result = component.componentInstance.numberToOperand(1);
+        expect(result).toEqual("+");
+      });
+
+      it("Should return minus when put 2", () => {
+        const component = TestBed.createComponent(AppComponent);
+        let result = component.componentInstance.numberToOperand(2);
+        expect(result).toEqual("-");
+      });
+
+      it("Should return multiply when put 3", () => {
+        const component = TestBed.createComponent(AppComponent);
+        let result = component.componentInstance.numberToOperand(3);
+        expect(result).toEqual("*");
+      });
+
+      it("Should return divide when put 4", () => {
+        const component = TestBed.createComponent(AppComponent);
+        let result = component.componentInstance.numberToOperand(4);
+        expect(result).toEqual("/");
+      });
+
+      it("Should return EMPTY string when input is not 1-4", () => {
+        const component = TestBed.createComponent(AppComponent);
+        let result = component.componentInstance.numberToOperand(5);
+        expect(result).toEqual("");
+      });
+
+
+    });
+
 
   });
 

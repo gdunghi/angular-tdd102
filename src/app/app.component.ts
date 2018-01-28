@@ -22,8 +22,18 @@ export class AppComponent implements OnInit {
     this.result = "?";
   }
 
-  numberToString = (num: Number): string => {
+  numberToString = (num: number): string => {
     return num + "";
+  }
+  public operands = { 1: "+", 2: "-", 3: "*", 4: "/" };
+  numberToOperand = (num: number): string => {
+    let operand = this.operands[num];
+    if (operand) {
+      return operand;
+    } else {
+      return "";
+    }
+
   }
 
 }
