@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { leave } from '@angular/core/src/profile/wtf_impl';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ export class AppComponent implements OnInit {
   }
 
   clickCaptcha = () => {
-    this.result = "?";
+    this.result = this.getCaptcha(this.pattern, this.leftOperand, this.operand, this.rightOperand);
+    console.log(this.result);
   }
 
   numberToString = (num: number): string => {
@@ -44,6 +46,20 @@ export class AppComponent implements OnInit {
     } else {
       return "";
     }
+  }
+
+  getRightOperand = (pattern: number, rightOperans: number): string => {
+    if (pattern === 1) {
+      return this.numberToText(rightOperans)
+    } else if (pattern === 2) {
+      return this.numberToString(rightOperans)
+    } else {
+      return "";
+    }
+  }
+
+  getCaptcha = (pattern: number, leftOperand: number, operand: number, rightOperand: number): string => {
+    return this.getLeftOperand(pattern, leftOperand) + this.numberToOperand(operand) + this.getRightOperand(pattern, rightOperand)
   }
 
 }

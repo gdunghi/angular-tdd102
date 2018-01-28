@@ -1,0 +1,14 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+    <h1>
+      Welcome to {{ title }}! {{result}}
+    </h1>
+    <input type="number" id="pattern" placeholder="pattern" name="pattern" [(ngModel)]="pattern"><br>
+    <input type="number" id="leftOperand" placeholder="leftOperand" [(ngModel)]="leftOperand"><br>
+    <input type="number" id="operand" placeholder="operand" [(ngModel)]="operand"><br>
+    <input type="number" id="rightOperand" placeholder="rightOperand" [(ngModel)]="rightOperand"><br>
+    
+    <button type="button" (click)="clickCaptcha()">Captcha</button>
+  
+  
+  </div>

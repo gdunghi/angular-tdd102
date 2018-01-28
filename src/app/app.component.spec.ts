@@ -1,10 +1,15 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { FormsModule } from "@angular/forms";
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
+      ],
+      imports: [
+        FormsModule
       ],
     }).compileComponents();
   }));
@@ -14,7 +19,10 @@ describe('AppComponent', () => {
     let SECOUND_PATTERN = 2;
     let INVALID_PATTERN = 99;
 
-
+    let PLUS = 1;
+    let MINUS = 2;
+    let MULTIPLY = 3;
+    let DIVIDE = 4;
 
     describe("Number to String", () => {
       it("should return 1 as string when put 1", () => {
@@ -109,7 +117,6 @@ describe('AppComponent', () => {
         expect(result).toEqual("");
       });
 
-
     });
 
     describe("Number to Text", () => {
@@ -173,6 +180,95 @@ describe('AppComponent', () => {
         });
       });
     });
+
+    describe("Right operand", () => {
+      it("should return empty string when pattern is not 1 or 2", () => {
+        const component = TestBed.createComponent(AppComponent);
+
+        let result = component.componentInstance.getRightOperand(INVALID_PATTERN, 1);
+        expect(result).toEqual("");
+      });
+
+      describe("First pattern", () => {
+        it("should call numberToText", () => {
+          const component = TestBed.createComponent(AppComponent);
+          spyOn(component.componentInstance, "numberToText");
+
+          component.componentInstance.getRightOperand(FIRST_PATTERN, 1);
+          expect(component.componentInstance.numberToText).toHaveBeenCalledWith(1);
+        });
+
+        it("should return ONE when put 1", () => {
+          const component = TestBed.createComponent(AppComponent);
+
+          let result = component.componentInstance.getRightOperand(FIRST_PATTERN, 1);
+          expect(result).toEqual("ONE");
+        });
+      });
+
+      describe("Seccound pattern", () => {
+
+        it("should call numberToString", () => {
+          const component = TestBed.createComponent(AppComponent);
+          spyOn(component.componentInstance, "numberToString");
+
+          component.componentInstance.getRightOperand(SECOUND_PATTERN, 1);
+          expect(component.componentInstance.numberToString).toHaveBeenCalledWith(1);
+        });
+
+        it("should return 1 when put 1", () => {
+          const component = TestBed.createComponent(AppComponent);
+
+          let result = component.componentInstance.getRightOperand(SECOUND_PATTERN, 1);
+          expect(result).toEqual("1");
+        });
+
+      });
+
+
+    });
+
+    describe("Get Captcha", () => {
+      it("Should call getLeftOperand, getRightOperand  and operand", () => {
+        const component = TestBed.createComponent(AppComponent);
+        spyOn(component.componentInstance, "getLeftOperand");
+        spyOn(component.componentInstance, "getRightOperand");
+        spyOn(component.componentInstance, "numberToOperand");
+
+
+        component.componentInstance.getCaptcha(FIRST_PATTERN, 1, PLUS, 1);
+        expect(component.componentInstance.getLeftOperand).toHaveBeenCalledWith(FIRST_PATTERN, 1);
+        expect(component.componentInstance.getRightOperand).toHaveBeenCalledWith(FIRST_PATTERN, 1);
+        expect(component.componentInstance.numberToOperand).toHaveBeenCalledWith(PLUS);
+
+      });
+
+      it("Should return 1+ONE when put 1,1,1,1", () => {
+        const component = TestBed.createComponent(AppComponent);
+        let result = component.componentInstance.getCaptcha(FIRST_PATTERN, 1, PLUS, 1);
+        expect(result).toEqual("1+ONE");
+      });
+
+      it("Should return 1+ONE when put 1,9,1,9", () => {
+        const component = TestBed.createComponent(AppComponent);
+        let result = component.componentInstance.getCaptcha(FIRST_PATTERN, 9, PLUS, 9);
+        expect(result).toEqual("9+NINE");
+      });
+
+      it("Should return ONE+1 when put 2,1,1,1", () => {
+        const component = TestBed.createComponent(AppComponent);
+        let result = component.componentInstance.getCaptcha(SECOUND_PATTERN, 1, PLUS, 1);
+        expect(result).toEqual("ONE+1");
+      });
+
+      it("Should return ONE+1 when put 2,1,1,9", () => {
+        const component = TestBed.createComponent(AppComponent);
+        let result = component.componentInstance.getCaptcha(SECOUND_PATTERN, 1, PLUS, 9);
+        expect(result).toEqual("ONE+9");
+      });
+    });
+
+
 
   });
 
