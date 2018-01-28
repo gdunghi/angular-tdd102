@@ -27,13 +27,23 @@ export class AppComponent implements OnInit {
   }
   public operands = { 1: "+", 2: "-", 3: "*", 4: "/" };
   numberToOperand = (num: number): string => {
-    let operand = this.operands[num];
-    if (operand) {
-      return operand;
+    return this.operands[num] || "";
+  }
+  public textOfNumber = { 0: "ZERO", 1: "ONE", 2: "TWO", 3: "THREE", 4: "FOUR", 5: "FIVE", 6: "SIX", 7: "SEVEN", 8: "EIGHT", 9: "NINE" };
+
+  numberToText = (num: number): string => {
+    return this.textOfNumber[num];
+  }
+
+  getLeftOperand = (pattern: number, leftOperand: number): string => {
+
+    if (pattern === 1) {
+      return this.numberToString(leftOperand)
+    } else if (pattern === 2) {
+      return this.numberToText(leftOperand)
     } else {
       return "";
     }
-
   }
 
 }

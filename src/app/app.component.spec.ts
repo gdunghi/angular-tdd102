@@ -10,6 +10,10 @@ describe('AppComponent', () => {
   }));
 
   describe("Captcha", () => {
+    let FIRST_PATTERN = 1;
+    let SECOUND_PATTERN = 2;
+    let INVALID_PATTERN = 99;
+
 
 
     describe("Number to String", () => {
@@ -108,6 +112,67 @@ describe('AppComponent', () => {
 
     });
 
+    describe("Number to Text", () => {
+      let textOfNumberMockup = { 0: "ZERO", 1: "ONE", 2: "TWO", 3: "THREE", 4: "FOUR", 5: "FIVE", 6: "SIX", 7: "SEVEN", 8: "EIGHT", 9: "NINE" };
+
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].forEach((num) => {
+
+        it("Should return " + textOfNumberMockup[0] + " when put " + num, () => {
+          const component = TestBed.createComponent(AppComponent);
+          let result = component.componentInstance.numberToText(num);
+          expect(result).toEqual(textOfNumberMockup[num]);
+        });
+
+
+      });
+
+    });
+
+    describe("Left operand", () => {
+
+      it("should return empty string when pattern is not 1 or 2", () => {
+        const component = TestBed.createComponent(AppComponent);
+
+        let result = component.componentInstance.getLeftOperand(INVALID_PATTERN, 1);
+        expect(result).toEqual("");
+      });
+
+      describe("First pattern", () => {
+
+        it("should call numberToString", () => {
+          const component = TestBed.createComponent(AppComponent);
+          spyOn(component.componentInstance, "numberToString");
+
+          component.componentInstance.getLeftOperand(FIRST_PATTERN, 1);
+          expect(component.componentInstance.numberToString).toHaveBeenCalledWith(1);
+        });
+
+        it("should return 1 when put 1", () => {
+          const component = TestBed.createComponent(AppComponent);
+
+          let result = component.componentInstance.getLeftOperand(FIRST_PATTERN, 1);
+          expect(result).toEqual("1");
+        });
+
+      });
+
+      describe("Secound pattern", () => {
+        it("should call numberToText", () => {
+          const component = TestBed.createComponent(AppComponent);
+          spyOn(component.componentInstance, "numberToText");
+
+          component.componentInstance.getLeftOperand(SECOUND_PATTERN, 1);
+          expect(component.componentInstance.numberToText).toHaveBeenCalledWith(1);
+        });
+
+        it("should return ONE when put 1", () => {
+          const component = TestBed.createComponent(AppComponent);
+
+          let result = component.componentInstance.getLeftOperand(SECOUND_PATTERN, 1);
+          expect(result).toEqual("ONE");
+        });
+      });
+    });
 
   });
 
